@@ -1,0 +1,158 @@
+#MADE_BY_NICHOLAS_KARALIS
+
+from tkinter import *
+
+applicationStart = False
+master = Tk()
+master.geometry('700x600')
+canvas = Canvas(master,width=800,height=600)
+backgroundCanvas = Canvas(master,width=120,height=600)
+
+mouseIsDown=False
+brush = False
+eraser = False
+color = ""
+colorSize = 0
+eraserSize = 0
+redImage = PhotoImage(file="red.gif")
+orangeImage = PhotoImage(file="orange.gif")
+yellowImage = PhotoImage(file="yellow.gif")
+greenImage = PhotoImage(file="green.gif")
+blueImage = PhotoImage(file="blue.gif")
+purpleImage = PhotoImage(file="purple.gif")
+
+brushImage = PhotoImage(file="brush copy.gif")
+eraserIamge = PhotoImage(file="eraser.gif")
+master.resizable(width=False,height=False)
+r = 0
+g = 0
+b = 0
+
+def setBrush():
+    global brush
+    global eraser
+    print("brush")
+    brush = True
+    eraser = False
+
+
+def setEraser():
+    print("bucket")
+    global eraser
+    global brush
+    eraser = True
+    brush = False
+
+def setRed():
+    global color
+    color = "red"
+
+def setYellow():
+    global color
+    color = "yellow"
+
+def setGreen():
+    global color
+    color = "green"
+
+def setBlue():
+    global color
+    color = "blue"
+
+def setOrange():
+    global color
+    color = "orange"
+
+def setPurple():
+    global color
+    color = "purple"
+
+def mouseDown(event):
+
+
+
+    colorSize=colorSlider.get()
+    eraserSize=eraserSlider.get()
+    if brush == True:
+        canvas.create_polygon(event.x-colorSize,event.y-colorSize,event.x-colorSize,event.y+colorSize,event.x+colorSize,event.y+colorSize,event.x+colorSize,event.y-colorSize,fill=color)
+        print("mousedown"+str(event.x)+","+str(event.y))
+    elif eraser == True:
+        canvas.create_polygon(event.x-eraserSize,event.y-eraserSize,event.x-eraserSize,event.y+eraserSize,event.x+eraserSize,event.y+eraserSize,event.x+eraserSize,event.y-eraserSize,fill="white")
+        print("mousedown"+str(event.x)+","+str(event.y))
+
+
+canvas.bind("<B1-Motion>",mouseDown)
+
+
+
+#COLOR_SLIDERS_START
+
+
+
+#COLOR_SLIDERS_END
+
+
+#WIDGET_BRUSHES_SIZES_START
+
+brush = Button(master,text = "Brush",command=setBrush)
+brush.config(image=brushImage,width="50",height="50")
+brush.pack()
+brush.place(x=0,y=0)
+eraserB = Button(master,text = "Eraser",command=setEraser)
+eraserB.config(image=eraserIamge,width="50",height="50")
+eraserB.pack()
+eraserB.place(x=0,y=150)
+
+colorSlider = Scale(master, from_=0,to=100,orient=VERTICAL)
+colorSlider.pack()
+colorSlider.place(x=56,y=0)
+
+eraserSlider = Scale(master, from_=0,to=100,orient=HORIZONTAL)
+eraserSlider.pack()
+eraserSlider.place(x=0,y=210)
+
+colorSize=colorSlider.get()
+print(colorSize)
+red = Button(master,text = "Red",command=setRed)
+red.config(image=redImage,width="20",height="20")
+red.pack()
+red.place(x=0,y=60)
+
+orange = Button(master,text = "Orange",command=setOrange)
+orange.config(image=orangeImage,width="20",height="20")
+orange.pack()
+orange.place(x=30,y=60)
+
+yellow = Button(master,text = "Yellow",command=setYellow)
+yellow.config(image=yellowImage,width="20",height="20")
+yellow.pack()
+yellow.place(x=0,y=90)
+
+green = Button(master,text = "Green",command=setGreen)
+green.config(image=greenImage,width="20",height="20")
+green.pack()
+green.place(x=30,y=90)
+
+blue = Button(master,text = "Blue",command=setBlue)
+blue.config(image=blueImage,width="20",height="20")
+blue.pack()
+blue.place(x=0,y=120)
+
+purple = Button(master,text = "Purple",command=setPurple)
+purple.config(image=purpleImage,width="20",height="20")
+purple.pack()
+purple.place(x=30,y=120)
+
+
+
+borderSquare = backgroundCanvas.create_rectangle(5,5,120,260,fill="white")
+
+
+backgroundCanvas.pack()
+backgroundCanvas.place(x=-7,y=-7)
+
+canvas.pack()
+canvas.place(x=100,y=0)
+#WIDGET_BRUSHES_SIZES_END
+
+mainloop()
